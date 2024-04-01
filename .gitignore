@@ -1,0 +1,29 @@
+# byte compiled
+*.pyc
+testcases/*
+.vscode/*
+.vscode/
+.pytest_cache/
+__pycache__/
+models/
+
+# sphinx
+_static/
+_templates/
+_build/
+conf.py
+source/
+*.bat
+Makefile
+*.rst
+conf.py
+
+# minimum working example
+mwe_tb/
+
+# internal
+graph_gen.ipynb
+
+# test data
+test/csv/restricted_groups_test.csv
+test/csv/restricted_groups_test.xlsx
