@@ -33,7 +33,7 @@ Any alterations to the models, datasets, or functions included with DRL-CMD must
 @article{doi,
   author = {Alshehri, Abdulelah S. and Tantisujjatham, Bryan and You, Fengqi},
   title = {Uncertainty-aware Deep Reinforcement Learning Approach for Computational Molecular Design},
-  journal = {Submitted to Green Chemistry},
+  journal = {Submitted to AIChE Journal},
   volume = {n/a},
   number = {n/a},
   pages = {n/a},
