@@ -31,7 +31,7 @@ To generate candidates for the following cases, run:
 Any alterations to the models, datasets, or functions included with DRL-CMD must be properly attributed according to the following citation.
 ```
 @article{doi,
-  author = {Alshehri, Abdulelah S. and Tantisujjatham, Bryan and You, Fengqi},
+  author = {Alshehri, Abdulelah S. and Tantisujjatham, Bryan},
   title = {Uncertainty-aware Deep Reinforcement Learning Approach for Computational Molecular Design},
   journal = {Submitted to AIChE Journal},
   volume = {n/a},
