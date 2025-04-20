@@ -2,38 +2,73 @@
 
 ## Table of Contents
 
-- [DRL-CAMD](#drl-camd)
-  - [Table of Contents](#table-of-contents)
-  - [Overview](#Overview)
-  - [Installation](#installation)
-  - [Quick Start](#quick-start)
-  - [Citation](#citation)
+- [Overview](#overview)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+  - [Running Design Cases](#running-design-cases)
+- [Citation](#citation)
 
 ## Overview
-This work introduces DRL-CMD, a novel deep reinforcement learning (DRL) framework for designing molecules with desired properties while carefully controlling uncertainties in property predictions.DRL-CMD utilizes a tailored molecular representation,  Gaussian Process property prediction models, and a sophisticated search method to address the critical challenge of uncertainty in computational molecular design (CMD). By optimizing properties, minimizing constraint violations, and reducing uncertainty, DRL-CMD aims to create greener and more reliable molecular solutions for diverse industrial applications.
+This repository introduces **DRL-CAMD**, a novel deep reinforcement learning (DRL) framework specifically developed for **Computational Molecular Design (CMD)**. The primary goal of DRL-CAMD is to design molecules with optimal properties while rigorously controlling uncertainties in property predictions.
+
+**Key Features:**
+
+- **Tailored Molecular Representation:** Ensures efficient and accurate molecular encoding for DRL models.
+- **Gaussian Process Models:** Incorporates probabilistic property prediction models to estimate uncertainties reliably.
+- **Smart Search Strategy:** Balances property optimization, constraint satisfaction, and uncertainty reduction.
+
+By addressing the critical challenge of uncertainty in CMD, **DRL-CAMD** contributes towards greener and more reliable molecular design solutions applicable across various industrial scenarios.
+
 ## Installation
 
-`git clone https://github.com/PEESEgroup/DRL-CMD`
+Clone the repository and install dependencies:
 
-`pip install -r requirements.txt`
+```bash
+git clone https://github.com/AbdulelahAlshehri/DRL-CMD.git
+cd DRL-CMD
+pip install -r requirements.txt
+```
+
+**Important Note:**  
+The property models used in DRL-CAMD are not provided within this repository due to their size and DIPPR data-sharing restrictions. A large subset of these property models and associated data is available separately in the following repository: [Pure-Component-Property-Estimation](https://github.com/PEESEgroup/Pure-Component-Property-Estimation).
+
+Make sure to download and appropriately place the necessary property model files into the project directory structure as required.
 
 ## Quick Start
-To generate candidates for the following cases, run:
 
-* **Mercaptobenzothiazole Crystallization Solvent Design:** `mwe.py`
-* **Organic Synthesis (DCM) Solvent Design:** `mwe1.py`
-* **Emulsion Surfactant Design:** `mwe2.py`
-* **Refrigerant Design:** `mwe3.py`
+### Running Design Cases
+Navigate to the project directory (`DRL-CMD`) and run the provided minimum working examples (MWEs) for specific molecular design applications as follows:
 
-**Important:** Our property models are not included in this repository due to their size and DIPPR data-sharing limitations. For a large subset of our property data, please refer to the following repository: [Pure-Component-Property-Estimation](https://github.com/PEESEgroup/Pure-Component-Property-Estimation)
-
-## Citation 
-Any alterations to the models, datasets, or functions included with DRL-CMD must be properly attributed according to the following citation.
+1. **Mercaptobenzothiazole Crystallization Solvent Design**
+```bash
+python mwe.py
 ```
+
+2. **Organic Synthesis (DCM) Solvent Design**
+```bash
+python mwe1.py
+```
+
+3. **Emulsion Surfactant Design**
+```bash
+python mwe2.py
+```
+
+4. **Refrigerant Design**
+```bash
+python mwe3.py
+```
+
+Each script runs a self-contained demonstration case and generates candidate molecules tailored to the specified application domain. Ensure that all dependencies and external property models are correctly loaded before execution.
+
+## Citation
+If you utilize or adapt any models, datasets, or methods provided within DRL-CAMD, please cite the following reference:
+
+```bibtex
 @article{doi,
   author = {Alshehri, Abdulelah S. and Tantisujjatham, Bryan},
   title = {Uncertainty-aware Deep Reinforcement Learning Approach for Computational Molecular Design},
-  journal = {Submitted to AIChE Journal},
+  journal = {Submitted to Industrial & Engineering Chemistry Research},
   volume = {n/a},
   number = {n/a},
   pages = {n/a},
