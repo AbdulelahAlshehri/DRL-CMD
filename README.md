@@ -6,67 +6,177 @@
 - [Installation](#installation)
 - [Quick Start](#quick-start)
   - [Running Design Cases](#running-design-cases)
+  - [Creating Custom Design Cases](#creating-custom-design-cases)
 - [Citation](#citation)
 
+---
+
 ## Overview
-This repository introduces **DRL-CAMD**, a novel deep reinforcement learning (DRL) framework specifically developed for **Computational Molecular Design (CMD)**. The primary goal of DRL-CAMD is to design molecules with optimal properties while rigorously controlling uncertainties in property predictions.
+**DRL-CAMD** (Deep Reinforcement Learning for Computational Molecular Design) is a state-of-the-art framework leveraging **Deep Reinforcement Learning (DRL)** to efficiently design molecules with desired properties while rigorously managing prediction uncertainties.
 
-**Key Features:**
+### Main Features:
+- **Custom Molecular Representations**: Optimized encoding for molecular search efficiency.
+- **Gaussian Process (GP) Models**: Robust uncertainty quantification for predicted molecular properties.
+- **Advanced DRL Strategy**: Simultaneously optimizes property values, constraint adherence, and uncertainty minimization.
 
-- **Tailored Molecular Representation:** Ensures efficient and accurate molecular encoding for DRL models.
-- **Gaussian Process Models:** Incorporates probabilistic property prediction models to estimate uncertainties reliably.
-- **Smart Search Strategy:** Balances property optimization, constraint satisfaction, and uncertainty reduction.
+The framework is designed for diverse industrial applications including solvent design, refrigerants, surfactants, and absorbents.
 
-By addressing the critical challenge of uncertainty in CMD, **DRL-CAMD** contributes towards greener and more reliable molecular design solutions applicable across various industrial scenarios.
+---
 
 ## Installation
 
-Clone the repository and install dependencies:
+Clone the repository and install dependencies using the following commands:
 
 ```bash
-git clone https://github.com/AbdulelahAlshehri/DRL-CMD.git
+git clone https://github.com/PEESEgroup/DRL-CMD.git
 cd DRL-CMD
 pip install -r requirements.txt
 ```
 
-**Important Note:**  
-The property models used in DRL-CAMD are not provided within this repository due to their size and DIPPR data-sharing restrictions. A large subset of these property models and associated data is available separately in the following repository: [Pure-Component-Property-Estimation](https://github.com/PEESEgroup/Pure-Component-Property-Estimation).
+**Note:** Property prediction models are not included due to DIPPR data-sharing policies. To acquire property data/models, visit:
 
-Make sure to download and appropriately place the necessary property model files into the project directory structure as required.
+[Pure-Component-Property-Estimation](https://github.com/PEESEgroup/Pure-Component-Property-Estimation)
+
+Download and integrate these models as instructed in their repository before running DRL-CAMD examples.
+
+---
 
 ## Quick Start
 
 ### Running Design Cases
-Navigate to the project directory (`DRL-CMD`) and run the provided minimum working examples (MWEs) for specific molecular design applications as follows:
+The repository includes ready-to-use scripts (`mwe.py`, `mwe1.py`, etc.) demonstrating various molecular design cases. Run these examples from the project root directory as follows:
 
-1. **Mercaptobenzothiazole Crystallization Solvent Design**
+1. **Mercaptobenzothiazole Crystallization Solvent Design:**
 ```bash
 python mwe.py
 ```
 
-2. **Organic Synthesis (DCM) Solvent Design**
+2. **Organic Synthesis (DCM) Solvent Design:**
 ```bash
 python mwe1.py
 ```
 
-3. **Emulsion Surfactant Design**
+3. **Emulsion Surfactant Design:**
 ```bash
 python mwe2.py
 ```
 
-4. **Refrigerant Design**
+4. **Refrigerant Design:**
 ```bash
 python mwe3.py
 ```
 
-Each script runs a self-contained demonstration case and generates candidate molecules tailored to the specified application domain. Ensure that all dependencies and external property models are correctly loaded before execution.
+These scripts run DRL-based molecular searches and generate candidate molecules adhering to pre-defined constraints.
+
+---
+
+### Creating Custom Design Cases
+
+To design a custom molecular search scenario, you must configure two main files:
+
+#### Step 1: Editing the `config/case.yml` file
+
+Define your custom molecular case in the YAML file by specifying constraints and groups as shown below:
+
+**Example case configuration:**
+
+```yaml
+# Example: MBT Crystallization Case
+mbt:
+  name: "MBT"
+  building_blocks: [1,2,3,4,15,..] #first order groups
+  constraints:
+    NUM_GROUPS:
+      min: Lower bound
+      max: Upper Bound
+    NUM_REPEAT_GROUPS:
+      min: Lower bound
+      max: Upper Bound
+    NUM_FUNC_GROUPS: 
+      min: Lower bound
+      max: Upper Bound
+    MOLECULAR_WEIGHT: 
+      min: Lower bound
+      max: Upper Bound
+    FLASH_POINT:
+      min: Lower bound
+      max: Upper Bound
+    MELTING_POINT:
+      min: Lower bound
+      max: Upper Bound
+    BOILING_POINT:
+      min: Lower bound
+      max: Upper Bound
+    LC50:
+      min: Lower bound
+      max: Upper Bound
+    HSP:
+      min: Lower bound
+      max: Upper Bound
+  num_rings: all
+```
+
+- Modify the constraints to fit your specific requirements (e.g., boiling point, melting point).
+- Adjust the list of building blocks based on your molecular groups database.
+
+#### Step 2: Modifying the `mwe.py` script to run your case
+
+Edit your Python script (`mwe.py`) to reflect the custom case you defined in the YAML file:
+
+```python
+
+warnings.filterwarnings('ignore')
+
+# Define your logging directory
+log_dir = "custom_case_logs/"
+
+# Update this line to reflect your custom case name from the YAML file
+parse = ParseData('-c mbt -r 2 -sp'.split())
+
+# Load case data
+cs = CaseSuite(parse, DataSet.instance())
+rs = RunSettings()
+
+# Replace 'CUSTOM' with your custom case ID from YAML configuration
+case_data = cs.load_case_data()['CUSTOM']
+case = CaseInstance(Case(case_data, DataSet.instance()), rs)
+
+# Initialize the environment
+env = Monitor(ActionMasker(MolecularSearchEnv(case), mask_fn), log_dir)
+
+# Train the DRL model
+model = MaskablePPO('MultiInputPolicy', env, verbose=1,
+                    tensorboard_log=log_dir, n_steps=10)
+
+# Adjust training steps as needed
+model.learn(10000, tb_log_name="custom_case_run")
+
+# Optional: Inspect the final state (uncomment the following line)
+# env.state.show()
+```
+
+#### Explanation of Key Modifications:
+
+- Change the argument passed to `ParseData()` to match the identifier used in your YAML file (e.g., `-c mbt` or `-c surfactant`).
+- Customize the `log_dir` to store training outputs and TensorBoard logs appropriately.
+- Adjust `n_steps` and total training steps (`model.learn`) based on your problem complexity.
+
+**To run your customized script:**
+
+```bash
+python mwe.py
+```
+
+Your custom-designed molecular candidates will be generated and logged accordingly.
+
+---
 
 ## Citation
-If you utilize or adapt any models, datasets, or methods provided within DRL-CAMD, please cite the following reference:
+When using or adapting any component or idea from DRL-CAMD, please cite:
 
 ```bibtex
 @article{doi,
-  author = {Alshehri, Abdulelah S. and Tantisujjatham, Bryan},
+  author = {Alshehri, Abdulelah S.,  Tantisujjatham, Bryan, Alrashed, Maher M.},
   title = {Uncertainty-aware Deep Reinforcement Learning Approach for Computational Molecular Design},
   journal = {Submitted to Industrial & Engineering Chemistry Research},
   volume = {n/a},
