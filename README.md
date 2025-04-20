@@ -192,3 +192,6 @@ When using or adapting any component or idea from DRL-CAMD, please cite:
   abstract = {Abstract}
 }
 ```
+
+
+**Note:**  Commercial use is strictly prohibited in accordance with our license agreement, as well as the usage terms of several data sources and tools integrated into this framework.
