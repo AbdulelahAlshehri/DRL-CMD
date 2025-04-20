@@ -155,6 +155,9 @@ model.learn(10000, tb_log_name="custom_case_run")
 # env.state.show()
 ```
 
+#### Step 3: Place your property models as named in the yml file above (e.g.,BOILING_POINT) in `models` folder to load property models
+
+
 #### Explanation of Key Modifications:
 
 - Change the argument passed to `ParseData()` to match the identifier used in your YAML file (e.g., `-c mbt` or `-c surfactant`).
