@@ -178,18 +178,18 @@ Your custom-designed molecular candidates will be generated and logged according
 When using or adapting any component or idea from DRL-CAMD, please cite:
 
 ```bibtex
-@article{doi,
-  author = {Alshehri, Abdulelah S.,  Tantisujjatham, Bryan, Alrashed, Maher M.},
-  title = {Uncertainty-aware Deep Reinforcement Learning Approach for Computational Molecular Design},
-  journal = {Submitted to Industrial & Engineering Chemistry Research},
-  volume = {n/a},
-  number = {n/a},
-  pages = {n/a},
-  keywords = {},
-  doi = {https://doi.org/},
-  url = {},
-  eprint = {},
-  abstract = {Abstract}
+@article{doi:10.1021/acs.iecr.4c04993,
+author = {Alshehri, Abdulelah S. and Tantisujjatham, Bryan and Alrashed, Maher M.},
+title = {Uncertainty-Aware Deep Reinforcement Learning Approach for Computational Molecular Design},
+journal = {Industrial \& Engineering Chemistry Research},
+volume = {0},
+number = {0},
+pages = {null},
+year = {0},
+doi = {10.1021/acs.iecr.4c04993},
+
+URL = {https://doi.org/10.1021/acs.iecr.4c04993},
+eprint = {https://doi.org/10.1021/acs.iecr.4c04993}
 }
 ```
 
